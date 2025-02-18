@@ -20,7 +20,10 @@ view(essentia.data)
 essentia.data.allentown <- read_csv("data/essentia.data.allentown.csv")
 view(essentia.data.allentown)
 
+################################################################################
 # Step 1: Out of Range Function 
+################################################################################
+
 range.allentown <- function(data, data.allentown, feature){
   # get feature value for Allentown
   allentown.feature <- get(feature, data.allentown)
@@ -58,3 +61,18 @@ final <- range.allentown(essentia.data, essentia.data.allentown, "overall_loudne
 final <- final |>
   select(artist, min, LF, UF, max, out.of.range, unusual, description)
 print(final)
+
+################################################################################
+# Step 2
+################################################################################
+
+# numeric columns
+numeric.data <- names(essentia.data)[sapply(essentia.data, is.numeric)]
+view(numeric.data)
+
+final_all <- lapply(numeric.data, function(feature){result <- range.allentown(essentia.data, 
+                                                                essentia.data.allentown, feature)
+                                                    result$feature <- feature # adding to result data frame
+                                                    return(result)})
+final_all <- bind_rows(final_all)
+view(final_all)
