@@ -76,3 +76,17 @@ final_all <- lapply(numeric.data, function(feature){result <- range.allentown(es
                                                     return(result)})
 final_all <- bind_rows(final_all)
 view(final_all)
+
+################################################################################
+# Step 3
+################################################################################
+
+select.features <- c("positivewords", "OtherP", "Perception", "conj", "chords_strength",
+                     "average_loudness", "barkbands_flatness_db","barkbands_skewness", "dissonance",
+                     "erbbands_flatness_db", "erbbands_skewness", "melbands_flatness_db", 
+                     "melbands_spread", "spectral_centroid", "spectral_complexity", 
+                     "spectral_energyband_middle_high", "spectral_entropy", 
+                     "spectral_kurtosis", "spectral_rolloff", "spectral_skewness")
+selected.data <- final_all |>
+  filter(feature %in% select.features)
+view(selected.data)  
