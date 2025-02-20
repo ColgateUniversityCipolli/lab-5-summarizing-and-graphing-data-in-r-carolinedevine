@@ -81,6 +81,11 @@ view(final_all)
 # Step 3
 ################################################################################
 
+# Look at 20 features that between the three bands only one is within range
+# This will give us the information on who had the most influence whereas the rest
+# of the features do not give us direct information that allows us to dissect who 
+# had more of an influence
+
 select.features <- c("positivewords", "OtherP", "Perception", "conj", "chords_strength",
                      "average_loudness", "barkbands_flatness_db","barkbands_skewness", "dissonance",
                      "erbbands_flatness_db", "erbbands_skewness", "melbands_flatness_db", 
@@ -90,3 +95,5 @@ select.features <- c("positivewords", "OtherP", "Perception", "conj", "chords_st
 selected.data <- final_all |>
   filter(feature %in% select.features)
 view(selected.data)  
+
+
