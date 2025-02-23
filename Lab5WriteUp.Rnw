@@ -1,0 +1,233 @@
+\documentclass{article}
+\usepackage{amsmath} %This allows me to use the align functionality.
+                     %If you find yourself trying to replicate
+                     %something you found online, ensure you're
+                     %loading the necessary packages!
+\usepackage{amsfonts}%Math font
+\usepackage{graphicx}%For including graphics
+\usepackage{hyperref}%For Hyperlinks
+\usepackage{longtable} % for my big table
+\usepackage[shortlabels]{enumitem}% For enumerated lists with labels specified
+                                  % We had to run tlmgr_install("enumitem") in R
+\hypersetup{colorlinks = true,citecolor=black} %set citations to have black (not green) color
+\usepackage{natbib}        %For the bibliography
+\setlength{\bibsep}{0pt plus 0.3ex}
+\bibliographystyle{apalike}%For the bibliography
+\usepackage[margin=0.50in]{geometry}
+\usepackage{float}
+\usepackage{multicol}
+
+%fix for figures
+\usepackage{caption}
+\newenvironment{Figure}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+\begin{document}
+
+\vspace{-1in}
+\title{Lab 3 -- MATH 240 -- Computational Statistics}
+
+\author{
+  Caroline Devine \\
+  Colgate University  \\
+  Math Department  \\
+  {\tt cdevine@colgate.edu}
+}
+
+\date{2/11/2025}
+
+\maketitle
+
+\begin{multicols}{2}
+\begin{abstract}
+This lab is an extension of Lab 2 which focused on how to automate data extraction for .WAV files through batch processing as well as extracting and analyzing musical features from JSON data. The extension is outlined in Task 3 under the methods section which compiles data from multiple tracks using the Essentia model and LIWC text analysis. The goal is to use the methods below to create data frames that can be used to facilitate analysis of musical influence.
+\end{abstract}
+
+\noindent \textbf{Keywords:} Data Collection, Lists, Batch Files, For Loops, JSON package
+
+\section{Introduction}
+The three bands: The Front Bottoms, Manchester Orchestra, and All Get Out collaborated on a song called ``Allentown"\citep{Ross} in 2018. This project aims at answering the research question of which band contributed or imprinted most to this song. To analytically determine this, we will analyze 180 tracks excluding ``Allentown" to examine the data about what each band's sound like. These music files have metadata, key musical features, that can be analyzed to identify distinctions between the influence of these bands. The goal is to learn how to install, load, and learn how to use libraries; work with character objects; code \texttt{for()} loops; and access elements of vectors and lists.
+
+\section{Methods}
+
+To analyze data sets of track files from different artists and albums, we built a batch file for data processing, extracted key music features from a .JSON file, and complied data from a larger set merging them with the Essentia models and LIWC text tool analysis.
+
+\subsection{Task 1: Building a Batch File for Data Processing}
+
+The dataset used was a directory called ``Music" containing two artists: OfficeStuff and PeopleStuff. The first step in converting the provided .WAV files to .JSON files to build a batch file was installing the \texttt{stringr} package which allows for string manipulation when extracting information out of the directories, subdirectories, and track files in the Music folder. 
+
+Steps to batch file:
+\begin{enumerate}
+  \item Retrieve the albums from Music folder using \texttt{list.dirs()} function
+  \item Using \texttt{stringr} functions to isolate and count .WAV files for each of the albums
+  \item Extract track number, artist name, track title, album name from track file names and directory
+  \item Create command lines for each .WAV file to convert into the naming convention for .JSON files
+  \item Save the converted .JSON files to a text file called \texttt{batfile.txt}
+\end{enumerate}
+Through this process, we used \texttt{stringr} package in R to do the majority of the manipulation of the .WAV files and extract meaningful data \citep{Wickham}. The \texttt{for()} loop function was used to automate the system for more efficient processing and future use.
+
+\subsection{Task 2}
+
+Now that we created a batch file, the next goal was to process a JSON file for key musical features to analyze. Instead of using the files from Task 1, we were provided with the .JSON file output for "The Front Bottoms - Talon Of The Hawk - Au Revoir (Adios)". The extracted data needed was the track's average loudness, spectral energy, danceability, temp in beats per minute, musical key and mode, and the duration in seconds.
+
+Steps to extract the key musical features:
+
+\begin{enumerate}
+  \item Install \texttt{jsonlite} package used for reading and parsing JSON files in R \citep{Ooms}.
+  \item Use \texttt{stringr} package again to extract the artist, album, and track from the file name.
+  \item Use \texttt{fromJSON()} function to read the provided .JSON file 
+  \item Extract the 7 necessary musical features
+\end{enumerate}
+
+This process obtains key musical features of the provided track. The \texttt{for()} loop provides efficiency for automation for all files in future. This completes the goal stated in the introduction, allowing for comparison to start.
+
+\subsection{Task 3: Compiling Data from Essentia}
+
+Using the \texttt{for()} loop implemented in Task 2, we extracted eight key musical features from a singular song ``Au Revoir" in the album Talon of the Hawk by The Front Bottoms using the uploaded .JSON file. The eight features are the overall loudness, dissonance, pitch salience, tempo in bpm, beat loudness, danceability, and tuning frequency.
+
+By iterating over a list of 181 .JSON files from the Essentia model \citep{Bogdanov}, we extracted the same eight key musical features from each track. We stored the data in a data frame with the corresponding artist, album, and track names. 
+
+\subsubsection{Load and Clean Data from Essentia Models}
+
+Using the provided .csv file, \texttt{EssentiaModelOutput.csv}, we used three datasets: DEAM, emoMusic, and MuSe to average each of their valance and arousal. New columns were created using \texttt{rowMeans()} of key musical features using different extractors such as Discogs-EffNet and MSD-MusiCNN in a similar manner as the valence and arousal columns. We renamed a column for clarity purposes changing \texttt{eff\_timbre\_bright} to \texttt{timbreBright}. Lastly, we isolated the desired columns which included the features created, renamed, and the artist, album, and track columns. This removed the unnecessary columns for future efficient analysis, leaving a clean data frame. 
+
+\subsubsection{LIWC Text Analysis Tool}
+To analyze the lyrics of the tracks, we utilized a text analysis tool called LIWC which provides features that describes thoughts, feelings, and personality traits based on the language used. We loaded the \texttt{LIWCOutput.csv}. We merged the data from the \textbf{streaming\_music\_extractor} calls, the Essentia models, and the LIWC into one data frame using \texttt{merge()} function. The three data frames merged are called \texttt{df, cleaned.essentia.model, and LIWCOutputdf}. The resulting data frame consisted of 181 rows and 140 columns ensuring no column duplication or omission. Additionally, we renamed \texttt{function.} to \texttt{funct} because using \texttt{function} as a column name can result in issues in coding within \texttt{R}. 
+
+Lastly, we wrote two .csv files with one containing all tracks except ``Allentown" called \texttt{trainingdata.csv} and the other containing only ``Allentown" called \texttt{testingdata.csv}. This is useful to evaluate the information solely based on ``Allentown" as the initial research question calls for. 
+
+\section{Results}
+For Task 1, we successfully analyzed .WAV files, storing the results in .JSON files. For Task 2, we collected the correct loudness, energy, danceability, tempo, key, mode and duration for the provided track's json file output. Task 3 extracted key musical features from 181 tracks, cleaned and organized the data from Essentia model's .JSON outputs, combined those data points with LIWC text analysis, and created training and testing data sets\citep{Bogdanov}. 
+\columnbreak
+\section{Discussion}
+ This process is now automated and can be replicated with other files as well. This creates an efficient way to compare larger data sets of multiple artists or albums. The integrated, structured data frame allows for specific analysis to address research question in future work. 
+\end{multicols} %% had to move up for the table to work 
+\section{Table}
+
+\begin{table}[ht]
+
+\begin{tabular}{lll}
+  \hline
+artist & feature & description \\ 
+  \hline
+All Get Out & spectral\_rolloff & Out of Range \\ 
+  Manchester Orchestra & spectral\_rolloff & Within Range \\ 
+  The Front Bottoms & spectral\_rolloff & Out of Range \\ 
+  All Get Out & dissonance & Outlying \\ 
+  Manchester Orchestra & dissonance & Within Range \\ 
+  The Front Bottoms & dissonance & Out of Range \\ 
+  All Get Out & average\_loudness & Outlying \\ 
+  Manchester Orchestra & average\_loudness & Within Range \\ 
+  The Front Bottoms & average\_loudness & Outlying \\ 
+  All Get Out & chords\_strength & Outlying \\ 
+  Manchester Orchestra & chords\_strength & Within Range \\ 
+  The Front Bottoms & chords\_strength & Out of Range \\ 
+  All Get Out & conj & Out of Range \\ 
+  Manchester Orchestra & conj & Outlying \\ 
+  The Front Bottoms & conj & Within Range \\ 
+  All Get Out & Perception & Out of Range \\ 
+  Manchester Orchestra & Perception & Within Range \\ 
+  The Front Bottoms & Perception & Out of Range \\ 
+  All Get Out & OtherP & Outlying \\ 
+  Manchester Orchestra & OtherP & Outlying \\ 
+  The Front Bottoms & OtherP & Within Range \\ 
+  All Get Out & positivewords & Outlying \\ 
+  Manchester Orchestra & positivewords & Outlying \\ 
+  The Front Bottoms & positivewords & Within Range \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+ 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{2em}
+
+\begin{tiny}
+\bibliography{bib.bib}
+\end{tiny}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\section{Appendix}
+
+Below is the table of the 20 features that we identified as features that differentiate the artists influence on the song.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lll}
+  \hline
+  artist & feature & description \\ 
+  \hline
+  All Get Out & spectral\_skewness & Outlying \\ 
+  Manchester Orchestra & spectral\_skewness & Within Range \\ 
+  The Front Bottoms & spectral\_skewness & Out of Range \\ 
+  All Get Out & spectral\_rolloff & Out of Range \\ 
+  Manchester Orchestra & spectral\_rolloff & Within Range \\ 
+  The Front Bottoms & spectral\_rolloff & Out of Range \\ 
+  All Get Out & spectral\_kurtosis & Outlying \\ 
+  Manchester Orchestra & spectral\_kurtosis & Within Range \\ 
+  The Front Bottoms & spectral\_kurtosis & Out of Range \\ 
+  All Get Out & spectral\_entropy & Outlying \\ 
+  Manchester Orchestra & spectral\_entropy & Within Range \\ 
+  The Front Bottoms & spectral\_entropy & Out of Range \\ 
+  All Get Out & spectral\_energyband\_middle\_high & Out of Range \\ 
+  Manchester Orchestra & spectral\_energyband\_middle\_high & Within Range \\ 
+  The Front Bottoms & spectral\_energyband\_middle\_high & Out of Range \\ 
+  All Get Out & spectral\_complexity & Out of Range \\ 
+  Manchester Orchestra & spectral\_complexity & Within Range \\ 
+  The Front Bottoms & spectral\_complexity & Out of Range \\ 
+  All Get Out & spectral\_centroid & Out of Range \\ 
+  Manchester Orchestra & spectral\_centroid & Within Range \\ 
+  The Front Bottoms & spectral\_centroid & Out of Range \\ 
+  All Get Out & melbands\_spread & Out of Range \\ 
+  Manchester Orchestra & melbands\_spread & Within Range \\ 
+  The Front Bottoms & melbands\_spread & Out of Range \\ 
+  All Get Out & melbands\_flatness\_db & Out of Range \\ 
+  Manchester Orchestra & melbands\_flatness\_db & Within Range \\ 
+  The Front Bottoms & melbands\_flatness\_db & Out of Range \\ 
+  All Get Out & erbbands\_skewness & Out of Range \\ 
+  Manchester Orchestra & erbbands\_skewness & Within Range \\ 
+  The Front Bottoms & erbbands\_skewness & Out of Range \\ 
+  All Get Out & erbbands\_flatness\_db & Outlying \\ 
+  Manchester Orchestra & erbbands\_flatness\_db & Within Range \\ 
+  The Front Bottoms & erbbands\_flatness\_db & Out of Range \\ 
+  All Get Out & dissonance & Outlying \\ 
+  Manchester Orchestra & dissonance & Within Range \\ 
+  The Front Bottoms & dissonance & Out of Range \\ 
+  All Get Out & barkbands\_skewness & Out of Range \\ 
+  Manchester Orchestra & barkbands\_skewness & Within Range \\ 
+  The Front Bottoms & barkbands\_skewness & Out of Range \\ 
+  All Get Out & barkbands\_flatness\_db & Outlying \\ 
+  Manchester Orchestra & barkbands\_flatness\_db & Within Range \\ 
+  The Front Bottoms & barkbands\_flatness\_db & Out of Range \\ 
+  All Get Out & average\_loudness & Outlying \\ 
+  Manchester Orchestra & average\_loudness & Within Range \\ 
+  The Front Bottoms & average\_loudness & Outlying \\ 
+  All Get Out & chords\_strength & Outlying \\ 
+  Manchester Orchestra & chords\_strength & Within Range \\ 
+  The Front Bottoms & chords\_strength & Out of Range \\ 
+  All Get Out & conj & Out of Range \\ 
+  Manchester Orchestra & conj & Outlying \\ 
+  The Front Bottoms & conj & Within Range \\ 
+  All Get Out & Perception & Out of Range \\ 
+  Manchester Orchestra & Perception & Within Range \\ 
+  The Front Bottoms & Perception & Out of Range \\ 
+  All Get Out & OtherP & Outlying \\ 
+  Manchester Orchestra & OtherP & Outlying \\ 
+  The Front Bottoms & OtherP & Within Range \\ 
+  All Get Out & positivewords & Outlying \\ 
+  Manchester Orchestra & positivewords & Outlying \\ 
+  The Front Bottoms & positivewords & Within Range \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+
+\end{document}

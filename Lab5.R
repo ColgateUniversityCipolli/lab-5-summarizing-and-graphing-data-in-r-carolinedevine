@@ -94,6 +94,25 @@ select.features <- c("positivewords", "OtherP", "Perception", "conj", "chords_st
                      "spectral_kurtosis", "spectral_rolloff", "spectral_skewness")
 selected.data <- final_all |>
   filter(feature %in% select.features)
-view(selected.data)  
+view(selected.data) 
 
+# isolate the artist, feature, and description (within range, outlying, or out of range)
+selected.data <- selected.data |>
+  select("artist", "feature", "description")
+view(selected.data) 
+
+isolated.features <- selected.data |>
+  filter(feature %in% c("average_loudness", "chords_strength", "dissonance", "spectral_rolloff",
+                        "positivewords", "OtherP", "Perception", "conj"))
+view(isolated.features)
+
+library("xtable")
+table <- xtable(isolated.features)
+view(table)
+print(table, include.rownames = F) # 24 rows (slighly large) but 4 features from LIWC and 4 features from Essentia
+
+
+################################################################################
+# Step 4
+################################################################################
 
