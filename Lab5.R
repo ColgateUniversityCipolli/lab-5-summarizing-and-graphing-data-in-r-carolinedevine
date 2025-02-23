@@ -2,8 +2,6 @@
 # Lab 5
 # Caroline Devine 
 ################################################################################
-# This is a continuation of the previous work we have done in lab.
-
 
 
 ################################################################################
@@ -63,7 +61,7 @@ final <- final |>
 print(final)
 
 ################################################################################
-# Step 2
+# Step 2: Numeric Data
 ################################################################################
 
 # numeric columns
@@ -78,7 +76,7 @@ final_all <- bind_rows(final_all)
 view(final_all)
 
 ################################################################################
-# Step 3
+# Step 3: Identify Features and Create LaTex Table
 ################################################################################
 
 # Look at 20 features that between the three bands only one is within range
@@ -97,11 +95,11 @@ selected.data <- final_all |>
 view(selected.data) 
 
 # isolate the artist, feature, and description (within range, outlying, or out of range)
-selected.data <- selected.data |>
+select.data <- selected.data |>
   select("artist", "feature", "description")
-view(selected.data) 
+view(select.data) 
 
-isolated.features <- selected.data |>
+isolated.features <- select.data |>
   filter(feature %in% c("average_loudness", "chords_strength", "dissonance", "spectral_rolloff",
                         "positivewords", "OtherP", "Perception", "conj"))
 view(isolated.features)
@@ -109,10 +107,45 @@ view(isolated.features)
 library("xtable")
 table <- xtable(isolated.features)
 view(table)
-print(table, include.rownames = F) # 24 rows (slighly large) but 4 features from LIWC and 4 features from Essentia
+print(table, include.rownames = F) # 24 rows (slightly large) but 4 features from LIWC and 4 features from Essentia
 
 
 ################################################################################
-# Step 4
+# Step 4: Graphing Selected Features
 ################################################################################
+library(tidyverse)
+library(patchwork)
 
+#graph.isolated.features <- selected.data |>
+ # filter(feature %in% c("average_loudness", "chords_strength", "dissonance", "spectral_rolloff",
+                        "positivewords", "OtherP", "Perception", "conj"))
+#view(graph.isolated.features)
+
+lyrical.features <- c("positivewords", "OtherP", "Perception", "conj")
+sound.features <- c("average_loudness", "chords_strength", "dissonance", "spectral_rolloff")
+
+lyrical.df <- isolated.features |>
+  filter(feature %in% lyrical.features, description == "Within Range")
+view(lyrical.df)
+
+lyric.plot <- ggplot(lyrical.df, aes(x = feature, fill = artist)) +
+  geom_bar(position = "dodge") + 
+  theme_bw() +
+  xlab("Lyrical Feature") +
+  ylab("Count of Within Range") + 
+  ggtitle("Lyrical Features")
+  
+sound.df <- isolated.features |>
+  filter(feature %in% sound.features, description == "Within Range")
+view(sound.df)
+
+sound.plot <- ggplot(sound.df, aes(x = feature, fill = artist)) +
+  geom_bar(position = "dodge") + 
+  theme_bw() +
+  xlab("Sound Feature") +
+  ylab("Count of Within Range") + 
+  ggtitle("Sound Features")
+
+help(patchwork)
+combined.plot <- sound.plot + lyric.plot
+combined.plot
