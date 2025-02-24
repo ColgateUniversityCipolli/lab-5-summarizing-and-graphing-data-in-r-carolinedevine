@@ -91,21 +91,23 @@
 
 \begin{multicols}{2}
 \begin{abstract}
-This lab is an extension of Lab 2 which focused on how to automate data extraction for .WAV files through batch processing as well as extracting and analyzing musical features from JSON data. The extension is outlined in Task 3 under the methods section which compiles data from multiple tracks using the Essentia model and LIWC text analysis. The goal is to use the methods below to create data frames that can be used to facilitate analysis of musical influence.
+This lab is an extension of Lab 2 which focused on how to automate data extraction for .WAV files through batch processing as well as extracting and analyzing musical features from \texttt{.JSON} data. The extension is outlined in Task 3 under the methods section which compiles data from multiple tracks using the Essentia model and LIWC text analysis. The goal is to use the methods below to create data frames that can be used to facilitate analysis of musical influence.
 \end{abstract}
 
 \noindent \textbf{Keywords:} Data Collection, Lists, Batch Files, For Loops, JSON package
 
 \section{Introduction}
-The three bands: The Front Bottoms, Manchester Orchestra, and All Get Out collaborated on a song called ``Allentown"\citep{Ross} in 2018. This project aims at answering the research question of which band contributed or imprinted most to this song. To analytically determine this, we will analyze 180 tracks excluding ``Allentown" to examine the data about what each band's sound like. These music files have metadata, key musical features, that can be analyzed to identify distinctions between the influence of these bands. The goal is to learn how to install, load, and learn how to use libraries; work with character objects; code \texttt{for()} loops; and access elements of vectors and lists.
+The three bands: The Front Bottoms, Manchester Orchestra, and All Get Out collaborated on a song called ``Allentown"\citep{Ross} in 2018. This project aims at answering the research question of which band contributed or imprinted most to this song. To analytically determine this, we will analyze 180 tracks and ``Allentown" to examine the data about what each band sounds like. These music files have metadata, key musical features, that can be analyzed to identify distinctions between the influence of these bands. The goal is to learn how to install, load, and learn how to use libraries; work with character objects; code \texttt{for()} loops; and access elements of vectors and lists.
 
 \section{Methods}
 
 To analyze data sets of track files from different artists and albums, we built a batch file for data processing, extracted key music features from a .JSON file, and complied data from a larger set merging them with the Essentia models and LIWC text tool analysis.
 
+% NEED TO DESCRIBE WHAT THE ESSENTIA MODEL AND LIWC IS HERE
+
 \subsection{Task 1: Building a Batch File for Data Processing}
 
-The dataset used was a directory called ``Music" containing two artists: OfficeStuff and PeopleStuff. The first step in converting the provided .WAV files to .JSON files to build a batch file was installing the \texttt{stringr} package which allows for string manipulation when extracting information out of the directories, subdirectories, and track files in the Music folder. 
+The dataset used was a directory called ``Music" containing two artists: OfficeStuff and PeopleStuff. The first step in analyzing the provided .WAV files was to build a batch file was installing the \texttt{stringr} package which allows for string manipulation when extracting information out of the directories, subdirectories, and track files in the Music folder. 
 
 Steps to batch file:
 \begin{enumerate}
@@ -115,40 +117,53 @@ Steps to batch file:
   \item Create command lines for each .WAV file to convert into the naming convention for .JSON files
   \item Save the converted .JSON files to a text file called \texttt{batfile.txt}
 \end{enumerate}
-Through this process, we used \texttt{stringr} package in R to do the majority of the manipulation of the .WAV files and extract meaningful data \citep{Wickham}. The \texttt{for()} loop function was used to automate the system for more efficient processing and future use.
+%Through this process, we used \texttt{stringr} package in R to do the majority of the manipulation of the .WAV files and extract meaningful data \citep{Wickham}. 
+The \texttt{for()} loop function was used to automate the system for more efficient processing and future use.
 
-\subsection{Task 2}
-
-Now that we created a batch file, the next goal was to process a JSON file for key musical features to analyze. Instead of using the files from Task 1, we were provided with the .JSON file output for "The Front Bottoms - Talon Of The Hawk - Au Revoir (Adios)". The extracted data needed was the track's average loudness, spectral energy, danceability, temp in beats per minute, musical key and mode, and the duration in seconds.
-
-Steps to extract the key musical features:
-
-\begin{enumerate}
-  \item Install \texttt{jsonlite} package used for reading and parsing JSON files in R \citep{Ooms}.
-  \item Use \texttt{stringr} package again to extract the artist, album, and track from the file name.
-  \item Use \texttt{fromJSON()} function to read the provided .JSON file 
-  \item Extract the 7 necessary musical features
-\end{enumerate}
-
-This process obtains key musical features of the provided track. The \texttt{for()} loop provides efficiency for automation for all files in future. This completes the goal stated in the introduction, allowing for comparison to start.
+% \subsection{Task 2}
+% 
+% Now that we created a batch file, the next goal was to process a JSON file for key musical features to analyze. Instead of using the files from Task 1, we were provided with the .JSON file output for "The Front Bottoms - Talon Of The Hawk - Au Revoir (Adios)". The extracted data needed was the track's average loudness, spectral energy, danceability, temp in beats per minute, musical key and mode, and the duration in seconds.
+% 
+% Steps to extract the key musical features:
+% 
+% \begin{enumerate}
+%   \item Install \texttt{jsonlite} package used for reading and parsing JSON files in R \citep{Ooms}.
+%   \item Use \texttt{stringr} package again to extract the artist, album, and track from the file name.
+%   \item Use \texttt{fromJSON()} function to read the provided .JSON file 
+%   \item Extract the 7 necessary musical features
+% \end{enumerate}
+% 
+% This process obtains key musical features of the provided track. The \texttt{for()} loop provides efficiency for automation for all files in future. This completes the goal stated in the introduction, allowing for comparison to start.
 
 \subsection{Task 3: Compiling Data from Essentia}
 
-Using the \texttt{for()} loop implemented in Task 2, we extracted eight key musical features from a singular song ``Au Revoir" in the album Talon of the Hawk by The Front Bottoms using the uploaded .JSON file. The eight features are the overall loudness, dissonance, pitch salience, tempo in bpm, beat loudness, danceability, and tuning frequency.
+Using a \texttt{for()} loop, we extracted eight key musical features from a singular song ``Au Revoir (Adios)" in the album Talon of the Hawk by The Front Bottoms using the uploaded .JSON file. The eight features are the overall loudness, dissonance, pitch salience, tempo in bpm, beat loudness, danceability, and tuning frequency.
 
-By iterating over a list of 181 .JSON files from the Essentia model \citep{Bogdanov}, we extracted the same eight key musical features from each track. We stored the data in a data frame with the corresponding artist, album, and track names. 
+By iterating over a list of 181 .JSON files from the Essentia model
+%% MODEL IS NOT RIGHT, NEED TO DBL CHECK, might be data?
+\citep{Bogdanov}, we extracted the same eight key musical features from each track. We stored the data in a data frame with the corresponding artist, album, and track names. 
 
 \subsubsection{Load and Clean Data from Essentia Models}
-
+%% THIS IS THE ESSENTIA MODEL 
+%% HOW IS THIS TIED TO THE 181 songs?
 Using the provided .csv file, \texttt{EssentiaModelOutput.csv}, we used three datasets: DEAM, emoMusic, and MuSe to average each of their valance and arousal. New columns were created using \texttt{rowMeans()} of key musical features using different extractors such as Discogs-EffNet and MSD-MusiCNN in a similar manner as the valence and arousal columns. We renamed a column for clarity purposes changing \texttt{eff\_timbre\_bright} to \texttt{timbreBright}. Lastly, we isolated the desired columns which included the features created, renamed, and the artist, album, and track columns. This removed the unnecessary columns for future efficient analysis, leaving a clean data frame. 
 
 \subsubsection{LIWC Text Analysis Tool}
-To analyze the lyrics of the tracks, we utilized a text analysis tool called LIWC which provides features that describes thoughts, feelings, and personality traits based on the language used. We loaded the \texttt{LIWCOutput.csv}. We merged the data from the \textbf{streaming\_music\_extractor} calls, the Essentia models, and the LIWC into one data frame using \texttt{merge()} function. The three data frames merged are called \texttt{df, cleaned.essentia.model, and LIWCOutputdf}. The resulting data frame consisted of 181 rows and 140 columns ensuring no column duplication or omission. Additionally, we renamed \texttt{function.} to \texttt{funct} because using \texttt{function} as a column name can result in issues in coding within \texttt{R}. 
+To analyze the lyrics of the tracks, we utilized a text analysis tool called LIWC which provides features that describes thoughts, feelings, and personality traits based on the language used. We loaded the \texttt{LIWCOutput.csv}. We merged the data from the 
+%% NEED TO REFERENCE THIS EARLIER WHEN IT IS USED
+\textbf{streaming\_music\_extractor} calls, the Essentia models, and the LIWC into one data frame using \texttt{merge()} function. The three data frames merged are called \texttt{df, cleaned.essentia.model, and LIWCOutputdf}. The resulting data frame consisted of 181 rows and 140 columns ensuring no column duplication or omission. Additionally, we renamed \texttt{function.} to \texttt{funct} because using \texttt{function} as a column name can result in issues in coding within \texttt{R}. 
 
 Lastly, we wrote two .csv files with one containing all tracks except ``Allentown" called \texttt{trainingdata.csv} and the other containing only ``Allentown" called \texttt{testingdata.csv}. This is useful to evaluate the information solely based on ``Allentown" as the initial research question calls for. 
 
 \section{Results}
-For Task 1, we successfully analyzed .WAV files, storing the results in .JSON files. For Task 2, we collected the correct loudness, energy, danceability, tempo, key, mode and duration for the provided track's json file output. Task 3 extracted key musical features from 181 tracks, cleaned and organized the data from Essentia model's .JSON outputs, combined those data points with LIWC text analysis, and created training and testing data sets\citep{Bogdanov}. 
+For Task 1, we successfully analyzed .WAV files, storing the results in .JSON files. 
+%% COMBINE TASK 2 and 3
+For Task 2, we collected the correct loudness, energy, danceability, tempo, key, mode and duration for the provided track's json file output. Task 3 extracted key musical features from 181 tracks,
+
+cleaned and organized the data from Essentia model's .JSON outputs, combined those data points with LIWC text analysis, and created training and testing data sets\citep{Bogdanov}. 
+
+%% INPUT PLOT FOR THE LAB CHALLENGE
+
 \columnbreak
 \section{Discussion}
  This process is now automated and can be replicated with other files as well. This creates an efficient way to compare larger data sets of multiple artists or albums. The integrated, structured data frame allows for specific analysis to address research question in future work. 
