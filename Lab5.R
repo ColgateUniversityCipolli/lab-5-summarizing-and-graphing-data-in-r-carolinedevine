@@ -118,7 +118,7 @@ library(patchwork)
 
 #graph.isolated.features <- selected.data |>
  # filter(feature %in% c("average_loudness", "chords_strength", "dissonance", "spectral_rolloff",
-                        "positivewords", "OtherP", "Perception", "conj"))
+ #                       "positivewords", "OtherP", "Perception", "conj"))
 #view(graph.isolated.features)
 
 lyrical.features <- c("positivewords", "OtherP", "Perception", "conj")
@@ -149,3 +149,26 @@ sound.plot <- ggplot(sound.df, aes(x = feature, fill = artist)) +
 help(patchwork)
 combined.plot <- sound.plot + lyric.plot
 combined.plot
+
+# Box Plot
+
+essentia.data
+view(essentia.data)
+
+library(ggplot2)
+
+view(essentia.data.allentown)
+
+Lplot <- ggplot(data=essentia.data,                       # Specify the data
+                aes(x=artist, y=positivewords)) +         # Specify x and y
+        geom_boxplot() +
+        theme_bw()+                                       # Remove the grey background
+        xlab("Artist")+                                   # Label x axis
+        ylab("Positive Words")+                           # Label y axis
+        geom_hline(yintercept = allentown.track, 
+                   color = "red", linetype = "dashed", linewidth = 1)
+
+Lplot
+
+
+
