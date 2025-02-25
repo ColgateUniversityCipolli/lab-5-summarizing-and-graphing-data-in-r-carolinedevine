@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.23)  23 FEB 2025 23:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.23)  24 FEB 2025 22:50
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -261,30 +261,37 @@ Package: longtable 2024-10-27 v4.22 Multi-page Table package (DPC)
 \c@LT@tables=\count297
 \c@LT@chunks=\count298
 \LT@p@ftn=\toks23
+) (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count299
+\float@exts=\toks24
+\float@box=\box59
+\@float@everytoks=\toks25
+\@floatcapt=\box60
 ) (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2025/02/06 v3.11 Customized lists
 \labelindent=\skip60
 \enit@outerparindent=\dimen162
-\enit@toks=\toks24
-\enit@inbox=\box59
-\enit@count@id=\count299
-\enitdp@description=\count300
+\enit@toks=\toks26
+\enit@inbox=\box61
+\enit@count@id=\count300
+\enitdp@description=\count301
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 62.
+Package hyperref Info: Option `colorlinks' set `true' on input line 63.
 (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip61
 \bibsep=\skip62
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count301
+\c@NAT@ctr=\count302
 ) (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count302
-\Gm@cntv=\count303
-\c@Gm@tempcnt=\count304
+\Gm@cnth=\count303
+\Gm@cntv=\count304
+\c@Gm@tempcnt=\count305
 \Gm@bindingoffset=\dimen163
 \Gm@wd@mp=\dimen164
 \Gm@odd@mp=\dimen165
@@ -293,14 +300,7 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layoutheight=\dimen168
 \Gm@layouthoffset=\dimen169
 \Gm@layoutvoffset=\dimen170
-\Gm@dimlist=\toks25
-) (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count305
-\float@exts=\toks26
-\float@box=\box60
-\@float@everytoks=\toks27
-\@floatcapt=\box61
+\Gm@dimlist=\toks27
 ) (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2024/09/14 v1.9i multicolumn formatting (FMi)
 \c@tracingmulticols=\count306
@@ -395,34 +395,38 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count318
 \l__pdf_internal_box=\box108
-) (./Lab5WriteUp.aux)
+) (./Lab5WriteUp.aux
+
+LaTeX Warning: Label `lyrical' multiply defined.
+
+)
 \openout1 = `Lab5WriteUp.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 77.
+LaTeX Font Info:    ... okay on input line 77.
 (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
 (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring ON on input line 76.
+Package hyperref Info: Link coloring ON on input line 77.
 (./Lab5WriteUp.out) (./Lab5WriteUp.out)
 \@outlinefile=\write3
 \openout3 = `Lab5WriteUp.out'.
@@ -463,51 +467,67 @@ Package hyperref Info: Link coloring ON on input line 76.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 91.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 92.
 (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 91.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 92.
 (/Users/carolinedevine/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Underfull \hbox (badness 10000) in paragraph at lines 114--115
-[]\OT1/cmr/m/n/10 Retrieve the al-bums from Mu-sic folder us-ing
+) [1
+
+{/Users/carolinedevine/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (11.12697pt too wide) in paragraph at lines 138--168
+ [][] 
  []
 
-[1
 
-{/Users/carolinedevine/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./Lab5WriteUp.bbl)
-
-[2]
-
-LaTeX Warning: Float too large for page by 10.49998pt on input line 295.
+Package multicol Warning: Floats and marginpars not allowed inside `multicols' environment!.
 
 
+Package multicol Warning: Floats and marginpars not allowed inside `multicols' environment!.
 
-[3]
+<figure/unnamed-chunk-3-1.pdf, id=79, 361.35pt x 252.945pt>
+File: figure/unnamed-chunk-3-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-3-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf  used on input line 208.
+(pdftex.def)             Requested size: 266.0125pt x 186.21146pt.
+[2] (./Lab5WriteUp.bbl)
 
-[4] (./Lab5WriteUp.aux)
+[3 <./figure/unnamed-chunk-3-1.pdf>]
+<figure/unnamed-chunk-5-1.pdf, id=105, 361.35pt x 252.945pt>
+File: figure/unnamed-chunk-5-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-5-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-1.pdf  used on input line 271.
+(pdftex.def)             Requested size: 361.34912pt x 252.94438pt.
+
+
+[4 <./figure/unnamed-chunk-5-1.pdf>]
+
+[5] (./Lab5WriteUp.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `Lab5WriteUp.out' has not changed.
-(rerunfilecheck)             Checksum: D71C6ECD12405C98B69CB399C2FB9D60;1558.
+(rerunfilecheck)             Checksum: A775057A82D74447352F2AD22EA91303;1735.
  ) 
 Here is how much of TeX's memory you used:
- 12409 strings out of 475172
- 198693 string characters out of 5764421
- 626648 words of memory out of 5000000
- 35225 multiletter control sequences out of 15000+600000
- 568160 words of font info for 73 fonts, out of 8000000 for 9000
+ 12468 strings out of 475172
+ 199957 string characters out of 5764421
+ 643904 words of memory out of 5000000
+ 35276 multiletter control sequences out of 15000+600000
+ 569406 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,9n,79p,831b,591s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,986b,612s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on Lab5WriteUp.pdf (4 pages, 172103 bytes).
+Output written on Lab5WriteUp.pdf (5 pages, 319282 bytes).
 PDF statistics:
- 149 PDF objects out of 1000 (max. 8388607)
- 117 compressed objects within 2 object streams
- 25 named destinations out of 1000 (max. 500000)
- 81 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 181 PDF objects out of 1000 (max. 8388607)
+ 144 compressed objects within 2 object streams
+ 30 named destinations out of 1000 (max. 500000)
+ 91 words of extra memory for PDF output out of 10000 (max. 10000000)
 

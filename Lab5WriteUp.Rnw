@@ -7,6 +7,7 @@
 \usepackage{graphicx}%For including graphics
 \usepackage{hyperref}%For Hyperlinks
 \usepackage{longtable} % for my big table
+\usepackage{float} % for using H
 \usepackage[shortlabels]{enumitem}% For enumerated lists with labels specified
                                   % We had to run tlmgr_install("enumitem") in R
 \hypersetup{colorlinks = true,citecolor=black} %set citations to have black (not green) color
@@ -25,7 +26,7 @@
 \begin{document}
 
 \vspace{-1in}
-\title{Lab 3 -- MATH 240 -- Computational Statistics}
+\title{Lab 5 -- MATH 240 -- Computational Statistics}
 
 \author{
   Caroline Devine \\
@@ -34,7 +35,7 @@
   {\tt cdevine@colgate.edu}
 }
 
-\date{2/11/2025}
+\date{2/25/2025}
 
 \maketitle
 
@@ -46,121 +47,239 @@ This lab is an extension of Lab 2 which focused on how to automate data extracti
 \noindent \textbf{Keywords:} Data Collection, Lists, Batch Files, For Loops, JSON package
 
 \section{Introduction}
-The three bands: The Front Bottoms, Manchester Orchestra, and All Get Out collaborated on a song called ``Allentown"\citep{Ross} in 2018. This project aims at answering the research question of which band contributed or imprinted most to this song. To analytically determine this, we will analyze 180 tracks and ``Allentown" to examine the data about what each band sounds like. These music files have metadata, key musical features, that can be analyzed to identify distinctions between the influence of these bands. The goal is to learn how to install, load, and learn how to use libraries; work with character objects; code \texttt{for()} loops; and access elements of vectors and lists.
+The three bands: The Front Bottoms, Manchester Orchestra, and All Get Out collaborated on a song called ``Allentown"\citep{Ross} in 2018. This project aims at answering the research question of which band contributed most to this song. To analytically determine this, we will analyze 180 tracks and ``Allentown" to examine the lyrical and sound features. The goal is to learn how to install, load, and learn how to use libraries; work with character objects; code \texttt{for()} loops; and access elements of vectors and lists.
 
 \section{Methods}
 
-To analyze data sets of track files from different artists and albums, we built a batch file for data processing, extracted key music features from a .JSON file, and complied data from a larger set merging them with the Essentia models and LIWC text tool analysis.
-
-% NEED TO DESCRIBE WHAT THE ESSENTIA MODEL AND LIWC IS HERE
 
 \subsection{Task 1: Building a Batch File for Data Processing}
 
-The dataset used was a directory called ``Music" containing two artists: OfficeStuff and PeopleStuff. The first step in analyzing the provided .WAV files was to build a batch file was installing the \texttt{stringr} package which allows for string manipulation when extracting information out of the directories, subdirectories, and track files in the Music folder. 
+We analyzed a folder called "Music" containing songs from two artists, OfficeStuff and PeopleStuff, using \texttt{R}. We utilized the \texttt{list.dirs()} function to find album folders, and the \texttt{stringr} package\citep{Wickham} allowed us to count and extract details from the .WAV files. We converted these details into .JSON format and saved the commands in a text file (\texttt{batfile.txt}). A \texttt{for()} loop automated the process, making it faster and easier to repeat in the future.
 
-Steps to batch file:
-\begin{enumerate}
-  \item Retrieve the albums from Music folder using \texttt{list.dirs()} function
-  \item Using \texttt{stringr} functions to isolate and count .WAV files for each of the albums
-  \item Extract track number, artist name, track title, album name from track file names and directory
-  \item Create command lines for each .WAV file to convert into the naming convention for .JSON files
-  \item Save the converted .JSON files to a text file called \texttt{batfile.txt}
-\end{enumerate}
-%Through this process, we used \texttt{stringr} package in R to do the majority of the manipulation of the .WAV files and extract meaningful data \citep{Wickham}. 
-The \texttt{for()} loop function was used to automate the system for more efficient processing and future use.
+\subsection{Task 2: Compiling Data from Essentia}
+We extracted key musical features from the song ``Au Revoir (Adios)" using its .JSON file. Expanding this process, we iterated over 181 .JSON files from the Essentia Extractor Data, which conducts spectrogram analysis on music tracks. The extracted features were compiled into a dataframe alongside artist, album, and track metadata for further analysis.
 
-% \subsection{Task 2}
-% 
-% Now that we created a batch file, the next goal was to process a JSON file for key musical features to analyze. Instead of using the files from Task 1, we were provided with the .JSON file output for "The Front Bottoms - Talon Of The Hawk - Au Revoir (Adios)". The extracted data needed was the track's average loudness, spectral energy, danceability, temp in beats per minute, musical key and mode, and the duration in seconds.
-% 
-% Steps to extract the key musical features:
-% 
-% \begin{enumerate}
-%   \item Install \texttt{jsonlite} package used for reading and parsing JSON files in R \citep{Ooms}.
-%   \item Use \texttt{stringr} package again to extract the artist, album, and track from the file name.
-%   \item Use \texttt{fromJSON()} function to read the provided .JSON file 
-%   \item Extract the 7 necessary musical features
-% \end{enumerate}
-% 
-% This process obtains key musical features of the provided track. The \texttt{for()} loop provides efficiency for automation for all files in future. This completes the goal stated in the introduction, allowing for comparison to start.
+\subsection{Task 3: Load and Clean Data from Essentia Models}
+% shortened summary of below
+The dataset from the Essentia Model Data was processed to extract relevant musical features and metadata. Valence and arousal values were averaged across multiple sets. Key musical attributes were computed and refined, including renaming variables for clarity. Irrelevant columns were removed, resulting in a structured dataset optimized for further analysis. We used 
 
-\subsection{Task 3: Compiling Data from Essentia}
-
-Using a \texttt{for()} loop, we extracted eight key musical features from a singular song ``Au Revoir (Adios)" in the album Talon of the Hawk by The Front Bottoms using the uploaded .JSON file. The eight features are the overall loudness, dissonance, pitch salience, tempo in bpm, beat loudness, danceability, and tuning frequency.
-
-By iterating over a list of 181 .JSON files from the Essentia model
-%% MODEL IS NOT RIGHT, NEED TO DBL CHECK, might be data?
-\citep{Bogdanov}, we extracted the same eight key musical features from each track. We stored the data in a data frame with the corresponding artist, album, and track names. 
-
-\subsubsection{Load and Clean Data from Essentia Models}
-%% THIS IS THE ESSENTIA MODEL 
-%% HOW IS THIS TIED TO THE 181 songs?
-Using the provided .csv file, \texttt{EssentiaModelOutput.csv}, we used three datasets: DEAM, emoMusic, and MuSe to average each of their valance and arousal. New columns were created using \texttt{rowMeans()} of key musical features using different extractors such as Discogs-EffNet and MSD-MusiCNN in a similar manner as the valence and arousal columns. We renamed a column for clarity purposes changing \texttt{eff\_timbre\_bright} to \texttt{timbreBright}. Lastly, we isolated the desired columns which included the features created, renamed, and the artist, album, and track columns. This removed the unnecessary columns for future efficient analysis, leaving a clean data frame. 
+The Essentia Model Data was obtained through using Python to interact with Essentia Models to collect data about what the music sounds like in more human terms. Using the provided .csv file, \texttt{EssentiaModelOutput.csv}, we used three datasets: DEAM, emoMusic, and MuSe to average each of their valance and arousal. New columns were created using \texttt{rowMeans()} of key musical features using different extractors such as Discogs-EffNet and MSD-MusiCNN in a similar manner as the valence and arousal columns. We renamed a column for clarity purposes changing \texttt{eff\_timbre\_bright} to \texttt{timbreBright}. Lastly, we isolated the desired columns which included the features created, renamed, and the artist, album, and track columns. This removed the unnecessary columns for future efficient analysis, leaving a clean data frame. 
 
 \subsubsection{LIWC Text Analysis Tool}
-To analyze the lyrics of the tracks, we utilized a text analysis tool called LIWC which provides features that describes thoughts, feelings, and personality traits based on the language used. We loaded the \texttt{LIWCOutput.csv}. We merged the data from the 
-%% NEED TO REFERENCE THIS EARLIER WHEN IT IS USED
-\textbf{streaming\_music\_extractor} calls, the Essentia models, and the LIWC into one data frame using \texttt{merge()} function. The three data frames merged are called \texttt{df, cleaned.essentia.model, and LIWCOutputdf}. The resulting data frame consisted of 181 rows and 140 columns ensuring no column duplication or omission. Additionally, we renamed \texttt{function.} to \texttt{funct} because using \texttt{function} as a column name can result in issues in coding within \texttt{R}. 
+To analyze the lyrics of the tracks, we utilized a text analysis tool called LIWC which provides features that describes thoughts, feelings, and personality traits based on the language used. We loaded the \texttt{LIWCOutput.csv}. We merged the data from Task 1, the Essentia models, and the LIWC into one data frame using \texttt{merge()} function. The three data frames merged are called \texttt{df, cleaned.essentia.model, and LIWCOutputdf}. The resulting data frame consisted of 181 rows and 140 columns ensuring no column duplication or omission. Additionally, we renamed \texttt{function.} to \texttt{funct} because using \texttt{function} as a column name can result in issues in coding within \texttt{R}. 
 
 Lastly, we wrote two .csv files with one containing all tracks except ``Allentown" called \texttt{trainingdata.csv} and the other containing only ``Allentown" called \texttt{testingdata.csv}. This is useful to evaluate the information solely based on ``Allentown" as the initial research question calls for. 
 
+\subsection{Task 4: Summarizing the Data}
+
+Importing a provided extended dataset containing 67 features from Essentia’s music extractor, 14 features from Essentia models, 118 features from LIWC, and two additional variables from the bing sentiment lexicon\citep{HuLiu2004} into \texttt{R} . This task implements \texttt{tidyverse}\citep{tidyverse} syntax, a summary of data numerically and visually, and a potential answer to the research question: which artist had a bigger impact on the track ``Allentown"\citep{Ross}?
+
+Two datasets imported were read from .csv files, the main dataset and a subset specific to Allentown. We created a function, \texttt{range.allentown}, to compute summary statistics calculating the minimum, first quartile (Q1), third quartile (Q3), interquartile range (IQR), as well as lower (LF) and upper fences (UF) based on 1.5 times the IQR for a given feature grouped by artist. For each artist, the function calculates the Allentown-specific value for the feature which is then compared against these statistics to classify it as “Out of Range,” “Outlying,” or “Within Range.” The resulting summary table, which includes the artist name and statistics, is used to analyze differences between artists. 
+
+We then identified numeric feature from the main dataset using R’s \texttt{is.numeric} function with \texttt{sapply}, storing the names of the columns in a vector. At the same time, the function \texttt{range.allentown} was applied to each numeric feature using \texttt{lapply} to compute summary statistics and range classifications for the Allentown subset. All the outputs were combined into one summary table using \texttt{bind\_rows} for further analysis.
+
+To determine which features were most influential, we initially examined 20 candidate features across three bands, noting that only one band out of the three consistently exhibited values classified as “Within Range.” Based on this observation, we selected eight features: dissonance, average loudness, chords strength, spectral rolloff, perception, positive words, OtherP, and conjunctions. We created two tables: one (\texttt{isolated.feature.sum}) displaying detailed statistics (minimum, lower fence, upper fence, and, maximum) for each feature per artist (see Appendix), and another providing a concise view of the artist, feature, and description. Both tables were formatted into LaTeX using the \texttt{xtable} package\citep{Xtable}.
+
+<<echo=FALSE, eval=TRUE, results="asis", message=FALSE, warning=FALSE, size='scriptsize'>>=
+library("tidyverse")
+help("tidyverse")
+
+# Upload data 
+essentia.data <- read_csv("data/essentia.data.csv")
+#view(essentia.data)
+
+essentia.data.allentown <- read_csv("data/essentia.data.allentown.csv")
+#view(essentia.data.allentown)
+
+################################################################################
+# Step 1: Out of Range Function 
+################################################################################
+
+range.allentown <- function(data, data.allentown, feature){
+  # get feature value for Allentown
+  allentown.feature <- get(feature, data.allentown)
+  
+  summary.data <- data %>%
+  group_by(artist) %>%
+  summarize(
+      min = min(get(feature), na.rm=T),
+      Q1 = quantile(get(feature), 0.25, na.rm=T),
+      Q3 = quantile(get(feature), 0.75, na.rm=T),
+      IQR = IQR(get(feature), na.rm=T),
+      LF = Q1 - 1.5*IQR,
+      UF = Q3 + 1.5*IQR,
+      max = max(get(feature), na.rm=T)
+    )%>%
+    
+  #ungroup()
+  
+  # New columns for comparison
+  mutate(
+    out.of.range = (allentown.feature < min | allentown.feature > max),
+    unusual = (allentown.feature < LF | allentown.feature > UF),
+    description = case_when(
+      out.of.range ~ "Out of Range",
+      unusual ~ "Outlying",
+      TRUE ~ "Within Range",
+    )
+  )
+  
+  return(summary.data)
+}
+
+
+final <- range.allentown(essentia.data, essentia.data.allentown, "overall_loudness")
+final <- final |>
+  select(artist, min, LF, UF, max, out.of.range, unusual, description)
+#print(final)
+
+################################################################################
+# Step 2: Numeric Data
+################################################################################
+
+# numeric columns
+numeric.data <- names(essentia.data)[sapply(essentia.data, is.numeric)]
+#view(numeric.data)
+
+final_all <- lapply(numeric.data, function(feature){result <- range.allentown(essentia.data, 
+                                                                essentia.data.allentown, feature)
+                                                    result$feature <- feature # adding to result data frame
+                                                    return(result)})
+final_all <- bind_rows(final_all)
+#view(final_all)
+
+################################################################################
+# Step 3: Identify Features and Create LaTex Table
+################################################################################
+
+# Look at 20 features that between the three bands only one is within range
+# This will give us the information on who had the most influence whereas the rest
+# of the features do not give us direct information that allows us to dissect who 
+# had more of an influence
+
+select.features <- c("positivewords", "OtherP", "Perception", "conj", "chords_strength",
+                     "average_loudness", "barkbands_flatness_db","barkbands_skewness", "dissonance",
+                     "erbbands_flatness_db", "erbbands_skewness", "melbands_flatness_db", 
+                     "melbands_spread", "spectral_centroid", "spectral_complexity", 
+                     "spectral_energyband_middle_high", "spectral_entropy", 
+                     "spectral_kurtosis", "spectral_rolloff", "spectral_skewness")
+selected.data <- final_all |>
+  filter(feature %in% select.features)
+#view(selected.data) 
+
+isolated.feature.sum <- selected.data |>
+  filter(feature %in% c("average_loudness", "chords_strength", "dissonance", "spectral_rolloff",
+                        "positivewords", "OtherP", "Perception", "conj")) |>
+  select(artist, min, LF, UF, max)
+#view(isolated.feature.sum)
+
+# isolate the artist, feature, and description (within range, outlying, or out of range)
+select.data <- selected.data |>
+  select("artist", "feature", "description")
+#view(select.data) 
+
+# For the Sound Features
+isolated.features <- select.data |>
+  filter(feature %in% c("average_loudness", "chords_strength", "dissonance", "spectral_rolloff")) 
+#view(isolated.features)
+
+# For the Lyrical Features
+l.isolated.features <- select.data |>
+  filter(feature %in% c("positivewords", "OtherP", "Perception", "conj")) 
+#view(isolated.features)
+
+library("xtable")
+table <- xtable(isolated.features, caption = "Sound Features")
+l.table <- xtable(l.isolated.features, caption = "Lyrical Features")
+#view(table)
+#print(table, include.rownames = F) # 24 rows (slightly large) but 4 features from LIWC and 4 features from Essentia
+
+sum.table <- xtable(isolated.feature.sum)
+view(sum.table)
+print(sum.table, include.rownames = F) # 24 rows (slightly large) but 4 features from LIWC and 4 features from Essentia
+@
+
+<<echo=FALSE, eval=TRUE, results="asis">>=
+print(table,
+table.placement = "H", include.rownames=FALSE, size = "small") # placement ="H" places table [H]ere, just like plot
+@
+Lastly, the eight features selected, four are from Essentia which represents sound information and four are from LIWC which is representative of lyrical information. We created Violin and box plots were created with \texttt{ggplot2}\citep{Ggplot2}. For sound, plots were generated for dissonance, average loudness, chords strength, and spectral rolloff; for lyrics, similar plots were made for perception, positive words, OtherP, and conjunctions, with each plot including a horizontal line indicating the corresponding ``Allentown" value. We combined the two plots using the \texttt{patchwork} package\citep{Patchwork} to produce visualizations for sound and lyrical features.
+
 \section{Results}
-For Task 1, we successfully analyzed .WAV files, storing the results in .JSON files. 
-%% COMBINE TASK 2 and 3
-For Task 2, we collected the correct loudness, energy, danceability, tempo, key, mode and duration for the provided track's json file output. Task 3 extracted key musical features from 181 tracks,
+For Task 1, we successfully analyzed .WAV files, storing the results in .JSON files. For Task 2 and 3, we extracted key musical features from 181 tracks,cleaned and organized the data from Essentia model's .JSON outputs, combined those data points with LIWC text analysis, and created training and testing data sets\citep{Bogdanov}. 
+Task 4 showed that Manchester Orchestra predominantly influenced sound features, while The Foot Bottoms had the greatest impact on lyrical features. 
+<<plot1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, size='scriptsize'>>=
+library(tidyverse)
+library(ggplot2)
+# Dissonance
+dissonance.plot <- ggplot(data=essentia.data,                       # Specify the data
+                aes(x=artist, y=dissonance)) +         # Specify x and y
+        geom_violin(fill="grey80")+
+        geom_boxplot(width = 0.1) +
+        theme_bw()+                                       # Remove the grey background
+        xlab("Artist")+                                   # Label x axis
+        ylab("Dissonance")+                           # Label y axis
+        geom_hline(yintercept = essentia.data.allentown$dissonance, 
+                  linetype = "dotted", linewidth = 1)
 
-cleaned and organized the data from Essentia model's .JSON outputs, combined those data points with LIWC text analysis, and created training and testing data sets\citep{Bogdanov}. 
+# Average Loudness
+average.plot <- ggplot(data=essentia.data,                       # Specify the data
+                aes(x=artist, y=average_loudness)) +         # Specify x and y
+  geom_violin(fill="grey80")+
+  geom_boxplot(width = 0.1) +
+  theme_bw()+                                       # Remove the grey background
+  xlab("Artist")+                                   # Label x axis
+  ylab("Average Loudness")+                           # Label y axis
+  geom_hline(yintercept = essentia.data.allentown$average_loudness, 
+             linetype = "dotted", linewidth = 1)
 
-%% INPUT PLOT FOR THE LAB CHALLENGE
+# Chords Strength
+chords.plot <- ggplot(data=essentia.data,                       # Specify the data
+                       aes(x=artist, y=chords_strength)) +         # Specify x and y
+  geom_violin(fill="grey80")+
+  geom_boxplot(width = 0.1) +
+  theme_bw()+                                       # Remove the grey background
+  xlab("Artist")+                                   # Label x axis
+  ylab("Chords Strength")+                           # Label y axis
+  geom_hline(yintercept = essentia.data.allentown$chords_strength, 
+             linetype = "dotted", linewidth = 1)
+
+# Spectral Rolloff
+rolloff.plot <- ggplot(data=essentia.data,                       # Specify the data
+                      aes(x=artist, y=spectral_rolloff)) +         # Specify x and y
+  geom_violin(fill="grey80")+
+  geom_boxplot(width = 0.1) +
+  theme_bw()+                                       # Remove the grey background
+  xlab("Artist")+                                   # Label x axis
+  ylab("Spectral Rolloff")+                           # Label y axis
+  geom_hline(yintercept = essentia.data.allentown$spectral_rolloff, 
+             linetype = "dotted", linewidth = 1)
+
+library(patchwork)
+combined.sound.plot <- average.plot + dissonance.plot + chords.plot + rolloff.plot
+@
+\begin{figure}[H]
+\begin{center}
+<<echo=FALSE, warning=FALSE, message=FALSE, fig.dim=c(5,3.5)>>=
+combined.sound.plot
+@
+\caption{Sound Features}
+\label{lyrical} 
+\end{center}
+\end{figure}
+Figure 1 shows the four sound features with the black dotted line intersecting with the Manchester Orchestra in all four. This is replicated for the lyrical features in Figure 2 in the appendix. 
 
 \columnbreak
 \section{Discussion}
  This process is now automated and can be replicated with other files as well. This creates an efficient way to compare larger data sets of multiple artists or albums. The integrated, structured data frame allows for specific analysis to address research question in future work. 
-\end{multicols} %% had to move up for the table to work 
-\section{Table}
 
-\begin{table}[ht]
-
-\begin{tabular}{lll}
-  \hline
-artist & feature & description \\ 
-  \hline
-All Get Out & spectral\_rolloff & Out of Range \\ 
-  Manchester Orchestra & spectral\_rolloff & Within Range \\ 
-  The Front Bottoms & spectral\_rolloff & Out of Range \\ 
-  All Get Out & dissonance & Outlying \\ 
-  Manchester Orchestra & dissonance & Within Range \\ 
-  The Front Bottoms & dissonance & Out of Range \\ 
-  All Get Out & average\_loudness & Outlying \\ 
-  Manchester Orchestra & average\_loudness & Within Range \\ 
-  The Front Bottoms & average\_loudness & Outlying \\ 
-  All Get Out & chords\_strength & Outlying \\ 
-  Manchester Orchestra & chords\_strength & Within Range \\ 
-  The Front Bottoms & chords\_strength & Out of Range \\ 
-  All Get Out & conj & Out of Range \\ 
-  Manchester Orchestra & conj & Outlying \\ 
-  The Front Bottoms & conj & Within Range \\ 
-  All Get Out & Perception & Out of Range \\ 
-  Manchester Orchestra & Perception & Within Range \\ 
-  The Front Bottoms & Perception & Out of Range \\ 
-  All Get Out & OtherP & Outlying \\ 
-  Manchester Orchestra & OtherP & Outlying \\ 
-  The Front Bottoms & OtherP & Within Range \\ 
-  All Get Out & positivewords & Outlying \\ 
-  Manchester Orchestra & positivewords & Outlying \\ 
-  The Front Bottoms & positivewords & Within Range \\ 
-   \hline
-\end{tabular}
-\end{table}
-
- 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \vspace{2em}
-
+\end{multicols} 
 \begin{tiny}
 \bibliography{bib.bib}
 \end{tiny}
@@ -171,74 +290,101 @@ All Get Out & spectral\_rolloff & Out of Range \\
 \pagebreak
 \section{Appendix}
 
-Below is the table of the 20 features that we identified as features that differentiate the artists influence on the song.
+<<echo=FALSE, eval=TRUE, results="asis">>=
+print(l.table,
+table.placement = "H", include.rownames=FALSE, size = "small") # placement ="H" places table [H]ere, just like plot
+@
+
+<<plot2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, size='scriptsize'>>=
+# Perception
+perception.plot <- ggplot(data=essentia.data,                       # Specify the data
+                       aes(x=artist, y=Perception)) +         # Specify x and y
+  geom_violin(fill="grey80")+
+  geom_boxplot(width = 0.1) +
+  theme_bw()+                                       # Remove the grey background
+  xlab("Artist")+                                   # Label x axis
+  ylab("Perception")+                           # Label y axis
+  geom_hline(yintercept = essentia.data.allentown$Perception, 
+             linetype = "dotted", linewidth = 1)
+
+# Positive Words
+positive.plot <- ggplot(data=essentia.data,                       # Specify the data
+                          aes(x=artist, y=positivewords)) +         # Specify x and y
+  geom_violin(fill="grey80")+
+  geom_boxplot(width = 0.1) +
+  theme_bw()+                                       # Remove the grey background
+  xlab("Artist")+                                   # Label x axis
+  ylab("Positive Words")+                           # Label y axis
+  geom_hline(yintercept = essentia.data.allentown$positivewords, 
+             linetype = "dotted", linewidth = 1)
+
+# Other Parts of Speech
+other.plot <- ggplot(data=essentia.data,                       # Specify the data
+                        aes(x=artist, y=OtherP)) +         # Specify x and y
+  geom_violin(fill="grey80")+
+  geom_boxplot(width = 0.1) +
+  theme_bw()+                                       # Remove the grey background
+  xlab("Artist")+                                   # Label x axis
+  ylab("OtherP")+                           # Label y axis
+  geom_hline(yintercept = essentia.data.allentown$OtherP, 
+             linetype = "dotted", linewidth = 1)
+
+# Conjunctions
+conj.plot <- ggplot(data=essentia.data,                       # Specify the data
+                      aes(x=artist, y=conj)) +         # Specify x and y
+  geom_violin(fill="grey80")+
+  geom_boxplot(width = 0.1) +
+  theme_bw()+                                       # Remove the grey background
+  xlab("Artist")+                                   # Label x axis
+  ylab("Conjunctions")+                           # Label y axis
+  geom_hline(yintercept = essentia.data.allentown$conj, 
+             linetype = "dotted", linewidth = 1)
+
+library(patchwork)
+combined.lyric.plot <- conj.plot + other.plot + positive.plot + perception.plot
+@
+
+\begin{figure}[H]
+\begin{center}
+<<echo=FALSE, warning=FALSE, message=FALSE, fig.dim=c(5,3.5)>>=
+combined.lyric.plot
+@
+\caption{Lyrical Features}
+\label{lyrical} 
+\end{center}
+\end{figure}
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{lll}
+\caption{Summary Table of 8 selected features}
+\begin{tabular}{lrrrrll}
   \hline
-  artist & feature & description \\ 
+artist & min & LF & UF & max & description & feature \\ 
   \hline
-  All Get Out & spectral\_skewness & Outlying \\ 
-  Manchester Orchestra & spectral\_skewness & Within Range \\ 
-  The Front Bottoms & spectral\_skewness & Out of Range \\ 
-  All Get Out & spectral\_rolloff & Out of Range \\ 
-  Manchester Orchestra & spectral\_rolloff & Within Range \\ 
-  The Front Bottoms & spectral\_rolloff & Out of Range \\ 
-  All Get Out & spectral\_kurtosis & Outlying \\ 
-  Manchester Orchestra & spectral\_kurtosis & Within Range \\ 
-  The Front Bottoms & spectral\_kurtosis & Out of Range \\ 
-  All Get Out & spectral\_entropy & Outlying \\ 
-  Manchester Orchestra & spectral\_entropy & Within Range \\ 
-  The Front Bottoms & spectral\_entropy & Out of Range \\ 
-  All Get Out & spectral\_energyband\_middle\_high & Out of Range \\ 
-  Manchester Orchestra & spectral\_energyband\_middle\_high & Within Range \\ 
-  The Front Bottoms & spectral\_energyband\_middle\_high & Out of Range \\ 
-  All Get Out & spectral\_complexity & Out of Range \\ 
-  Manchester Orchestra & spectral\_complexity & Within Range \\ 
-  The Front Bottoms & spectral\_complexity & Out of Range \\ 
-  All Get Out & spectral\_centroid & Out of Range \\ 
-  Manchester Orchestra & spectral\_centroid & Within Range \\ 
-  The Front Bottoms & spectral\_centroid & Out of Range \\ 
-  All Get Out & melbands\_spread & Out of Range \\ 
-  Manchester Orchestra & melbands\_spread & Within Range \\ 
-  The Front Bottoms & melbands\_spread & Out of Range \\ 
-  All Get Out & melbands\_flatness\_db & Out of Range \\ 
-  Manchester Orchestra & melbands\_flatness\_db & Within Range \\ 
-  The Front Bottoms & melbands\_flatness\_db & Out of Range \\ 
-  All Get Out & erbbands\_skewness & Out of Range \\ 
-  Manchester Orchestra & erbbands\_skewness & Within Range \\ 
-  The Front Bottoms & erbbands\_skewness & Out of Range \\ 
-  All Get Out & erbbands\_flatness\_db & Outlying \\ 
-  Manchester Orchestra & erbbands\_flatness\_db & Within Range \\ 
-  The Front Bottoms & erbbands\_flatness\_db & Out of Range \\ 
-  All Get Out & dissonance & Outlying \\ 
-  Manchester Orchestra & dissonance & Within Range \\ 
-  The Front Bottoms & dissonance & Out of Range \\ 
-  All Get Out & barkbands\_skewness & Out of Range \\ 
-  Manchester Orchestra & barkbands\_skewness & Within Range \\ 
-  The Front Bottoms & barkbands\_skewness & Out of Range \\ 
-  All Get Out & barkbands\_flatness\_db & Outlying \\ 
-  Manchester Orchestra & barkbands\_flatness\_db & Within Range \\ 
-  The Front Bottoms & barkbands\_flatness\_db & Out of Range \\ 
-  All Get Out & average\_loudness & Outlying \\ 
-  Manchester Orchestra & average\_loudness & Within Range \\ 
-  The Front Bottoms & average\_loudness & Outlying \\ 
-  All Get Out & chords\_strength & Outlying \\ 
-  Manchester Orchestra & chords\_strength & Within Range \\ 
-  The Front Bottoms & chords\_strength & Out of Range \\ 
-  All Get Out & conj & Out of Range \\ 
-  Manchester Orchestra & conj & Outlying \\ 
-  The Front Bottoms & conj & Within Range \\ 
-  All Get Out & Perception & Out of Range \\ 
-  Manchester Orchestra & Perception & Within Range \\ 
-  The Front Bottoms & Perception & Out of Range \\ 
-  All Get Out & OtherP & Outlying \\ 
-  Manchester Orchestra & OtherP & Outlying \\ 
-  The Front Bottoms & OtherP & Within Range \\ 
-  All Get Out & positivewords & Outlying \\ 
-  Manchester Orchestra & positivewords & Outlying \\ 
-  The Front Bottoms & positivewords & Within Range \\ 
+All Get Out & 935.91 & 701.91 & 2767.30 & 2520.04 & Out of Range & spectral\_rolloff \\ 
+  Manchester Orchestra & 518.87 & 151.27 & 2083.17 & 2566.67 & Within Range & spectral\_rolloff \\ 
+  The Front Bottoms & 927.04 & 740.58 & 2421.46 & 3190.29 & Out of Range & spectral\_rolloff \\ 
+  All Get Out & 0.40 & 0.44 & 0.50 & 0.48 & Outlying & dissonance \\ 
+  Manchester Orchestra & 0.37 & 0.36 & 0.53 & 0.48 & Within Range & dissonance \\ 
+  The Front Bottoms & 0.43 & 0.44 & 0.49 & 0.48 & Out of Range & dissonance \\ 
+  All Get Out & 0.16 & 0.70 & 1.10 & 0.97 & Outlying & average\_loudness \\ 
+  Manchester Orchestra & 0.00 & 0.01 & 1.46 & 0.97 & Within Range & average\_loudness \\ 
+  The Front Bottoms & 0.55 & 0.85 & 1.02 & 0.98 & Outlying & average\_loudness \\ 
+  All Get Out & 0.47 & 0.47 & 0.58 & 0.59 & Outlying & chords\_strength \\ 
+  Manchester Orchestra & 0.48 & 0.45 & 0.63 & 0.62 & Within Range & chords\_strength \\ 
+  The Front Bottoms & 0.48 & 0.46 & 0.58 & 0.57 & Out of Range & chords\_strength \\ 
+  All Get Out & 0.91 & -0.51 & 9.76 & 10.68 & Out of Range & conj \\ 
+  Manchester Orchestra & 0.00 & 0.74 & 10.98 & 14.43 & Outlying & conj \\ 
+  The Front Bottoms & 0.00 & -1.17 & 13.90 & 12.31 & Within Range & conj \\ 
+  All Get Out & 4.67 & 4.14 & 18.91 & 20.89 & Out of Range & Perception \\ 
+  Manchester Orchestra & 0.00 & -1.06 & 23.87 & 28.37 & Within Range & Perception \\ 
+  The Front Bottoms & 4.27 & 3.74 & 19.66 & 22.56 & Out of Range & Perception \\ 
+  All Get Out & 0.00 & -1.50 & 2.50 & 14.42 & Outlying & OtherP \\ 
+  Manchester Orchestra & 0.00 & -1.64 & 2.73 & 7.69 & Outlying & OtherP \\ 
+  The Front Bottoms & 0.00 & -3.48 & 7.20 & 12.50 & Within Range & OtherP \\ 
+  All Get Out & 2.00 & -1.50 & 18.50 & 58.00 & Outlying & positivewords \\ 
+  Manchester Orchestra & 0.00 & -3.00 & 13.00 & 27.00 & Outlying & positivewords \\ 
+  The Front Bottoms & 1.00 & -14.50 & 37.50 & 34.00 & Within Range & positivewords \\ 
    \hline
 \end{tabular}
 \end{table}
