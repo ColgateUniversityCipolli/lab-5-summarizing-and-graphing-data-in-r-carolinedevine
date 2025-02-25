@@ -98,30 +98,27 @@ This lab is an extension of Lab 2 which focused on how to automate data extracti
 \noindent \textbf{Keywords:} Data Collection, Lists, Batch Files, For Loops, JSON package
 
 \section{Introduction}
-The three bands: The Front Bottoms, Manchester Orchestra, and All Get Out collaborated on a song called ``Allentown"\citep{Ross} in 2018. This project aims at answering the research question of which band contributed most to this song. To analytically determine this, we will analyze 180 tracks and ``Allentown" to examine the lyrical and sound features. The goal is to learn how to install, load, and learn how to use libraries; work with character objects; code \texttt{for()} loops; and access elements of vectors and lists.
+The three bands: The Front Bottoms, Manchester Orchestra, and All Get Out collaborated on a song called ``Allentown"\citep{Ross} in 2018. This project aims at answering the research question of which band contributed most to this song. To analytically determine this, we will analyze 180 tracks and ``Allentown" through the lyrical and sound features. 
 
 \section{Methods}
-
 
 \subsection{Task 1: Building a Batch File for Data Processing}
 
 We analyzed a folder called "Music" containing songs from two artists, OfficeStuff and PeopleStuff, using \texttt{R}. We utilized the \texttt{list.dirs()} function to find album folders, and the \texttt{stringr} package\citep{Wickham} allowed us to count and extract details from the .WAV files. We converted these details into .JSON format and saved the commands in a text file (\texttt{batfile.txt}). A \texttt{for()} loop automated the process, making it faster and easier to repeat in the future.
 
 \subsection{Task 2: Compiling Data from Essentia}
-We extracted key musical features from the song ``Au Revoir (Adios)" using its .JSON file. Expanding this process, we iterated over 181 .JSON files from the Essentia Extractor Data, which conducts spectrogram analysis on music tracks. The extracted features were compiled into a dataframe alongside artist, album, and track metadata for further analysis.
+We extracted key musical features from the song ``Au Revoir (Adios)" using \texttt{jsonlite} package used for reading and parsing .JSON files in R \citep{Ooms}. Expanding this process, we iterated over 181 .JSON files from the Essentia Extractor Data, which conducts spectrogram analysis on music tracks\citep{Bogdanov}. The extracted features were compiled into a dataframe with artist, album, and track data for further analysis.
 
 \subsection{Task 3: Load and Clean Data from Essentia Models}
-% shortened summary of below
-The dataset from the Essentia Model Data was processed to extract relevant musical features and metadata. Valence and arousal values were averaged across multiple sets. Key musical attributes were computed and refined, including renaming variables for clarity. Irrelevant columns were removed, resulting in a structured dataset optimized for further analysis. We used 
 
-The Essentia Model Data was obtained through using Python to interact with Essentia Models to collect data about what the music sounds like in more human terms. Using the provided .csv file, \texttt{EssentiaModelOutput.csv}, we used three datasets: DEAM, emoMusic, and MuSe to average each of their valance and arousal. New columns were created using \texttt{rowMeans()} of key musical features using different extractors such as Discogs-EffNet and MSD-MusiCNN in a similar manner as the valence and arousal columns. We renamed a column for clarity purposes changing \texttt{eff\_timbre\_bright} to \texttt{timbreBright}. Lastly, we isolated the desired columns which included the features created, renamed, and the artist, album, and track columns. This removed the unnecessary columns for future efficient analysis, leaving a clean data frame. 
+We used the Essentia Model Data which provides data about what the music sounds like in more human terms. Valence and arousal values were averaged across multiple sets. Key musical attributes were created using different extractors, including renaming features for clarity. Aslo, irrelevant columns were removed, resulting in a a clean data frame.
 
-\subsubsection{LIWC Text Analysis Tool}
-To analyze the lyrics of the tracks, we utilized a text analysis tool called LIWC which provides features that describes thoughts, feelings, and personality traits based on the language used. We loaded the \texttt{LIWCOutput.csv}. We merged the data from Task 1, the Essentia models, and the LIWC into one data frame using \texttt{merge()} function. The three data frames merged are called \texttt{df, cleaned.essentia.model, and LIWCOutputdf}. The resulting data frame consisted of 181 rows and 140 columns ensuring no column duplication or omission. Additionally, we renamed \texttt{function.} to \texttt{funct} because using \texttt{function} as a column name can result in issues in coding within \texttt{R}. 
+\subsection{Task 4: LIWC Text Analysis Tool}
+To analyze track lyrics, we used the LIWC text analysis tool, which extracts linguistic features related to thoughts, feelings, and personality traits. The processed data was then loaded for analysis. Data from Task 1, the Essentia models, and LIWC were merged into a single data frame, ensuring no duplication or omission. The final dataset contained 181 rows and 140 columns. To prevent coding conflicts in R, the column \texttt{function.} was renamed to \texttt{funct}. % DO I NEED 
 
-Lastly, we wrote two .csv files with one containing all tracks except ``Allentown" called \texttt{trainingdata.csv} and the other containing only ``Allentown" called \texttt{testingdata.csv}. This is useful to evaluate the information solely based on ``Allentown" as the initial research question calls for. 
+%Lastly, we wrote two .csv files with one containing all tracks except ``Allentown" called \texttt{trainingdata.csv} and the other containing only ``Allentown" called \texttt{testingdata.csv}. This is useful to evaluate the information solely based on ``Allentown" as the initial research question calls for. 
 
-\subsection{Task 4: Summarizing the Data}
+\subsection{Task 5: Summarizing the Data}
 
 Importing a provided extended dataset containing 67 features from Essentia’s music extractor, 14 features from Essentia models, 118 features from LIWC, and two additional variables from the bing sentiment lexicon\citep{HuLiu2004} into \texttt{R} . This task implements \texttt{tidyverse}\citep{tidyverse} syntax, a summary of data numerically and visually, and a potential answer to the research question: which artist had a bigger impact on the track ``Allentown"\citep{Ross}?
 
@@ -132,7 +129,7 @@ We then identified numeric feature from the main dataset using R’s \texttt{is.
 To determine which features were most influential, we initially examined 20 candidate features across three bands, noting that only one band out of the three consistently exhibited values classified as “Within Range.” Based on this observation, we selected eight features: dissonance, average loudness, chords strength, spectral rolloff, perception, positive words, OtherP, and conjunctions. We created two tables: one (\texttt{isolated.feature.sum}) displaying detailed statistics (minimum, lower fence, upper fence, and, maximum) for each feature per artist (see Appendix), and another providing a concise view of the artist, feature, and description. Both tables were formatted into LaTeX using the \texttt{xtable} package\citep{Xtable}.
 
 % latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Mon Feb 24 22:50:23 2025
+% Tue Feb 25 11:07:13 2025
 \begin{table}[ht]
 \centering
 \begin{tabular}{lrrrr}
@@ -169,7 +166,7 @@ All Get Out & 935.91 & 701.91 & 2767.30 & 2520.04 \\
 
 
 % latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Mon Feb 24 22:50:23 2025
+% Tue Feb 25 11:07:13 2025
 \begin{table}[H]
 \centering
 \begingroup\small
@@ -235,7 +232,7 @@ Figure 1 shows the four sound features with the black dotted line intersecting w
 \section{Appendix}
 
 % latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Mon Feb 24 22:50:24 2025
+% Tue Feb 25 11:07:14 2025
 \begin{table}[H]
 \centering
 \begingroup\small

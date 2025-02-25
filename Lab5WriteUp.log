@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.23)  24 FEB 2025 22:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.23)  25 FEB 2025 11:07
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -477,7 +477,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/Users/carolinedevine/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (11.12697pt too wide) in paragraph at lines 138--168
+Overfull \hbox (11.12697pt too wide) in paragraph at lines 135--165
  [][] 
  []
 
@@ -487,18 +487,18 @@ Package multicol Warning: Floats and marginpars not allowed inside `multicols' e
 
 Package multicol Warning: Floats and marginpars not allowed inside `multicols' environment!.
 
-<figure/unnamed-chunk-3-1.pdf, id=79, 361.35pt x 252.945pt>
+<figure/unnamed-chunk-3-1.pdf, id=87, 361.35pt x 252.945pt>
 File: figure/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf  used on input line 208.
+Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf  used on input line 205.
 (pdftex.def)             Requested size: 266.0125pt x 186.21146pt.
-[2] (./Lab5WriteUp.bbl)
+[2 <./figure/unnamed-chunk-3-1.pdf>] (./Lab5WriteUp.bbl)
 
-[3 <./figure/unnamed-chunk-3-1.pdf>]
-<figure/unnamed-chunk-5-1.pdf, id=105, 361.35pt x 252.945pt>
+[3]
+<figure/unnamed-chunk-5-1.pdf, id=110, 361.35pt x 252.945pt>
 File: figure/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-5-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-5-1.pdf  used on input line 271.
+Package pdftex.def Info: figure/unnamed-chunk-5-1.pdf  used on input line 268.
 (pdftex.def)             Requested size: 361.34912pt x 252.94438pt.
 
 
@@ -513,21 +513,21 @@ L3 programming layer <2025-01-18>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Lab5WriteUp.out' has not changed.
-(rerunfilecheck)             Checksum: A775057A82D74447352F2AD22EA91303;1735.
+(rerunfilecheck)             Checksum: B3EAE64AC3D706F14B3814F67C5BB5AE;1771.
  ) 
 Here is how much of TeX's memory you used:
- 12468 strings out of 475172
- 199957 string characters out of 5764421
- 643904 words of memory out of 5000000
- 35276 multiletter control sequences out of 15000+600000
+ 12472 strings out of 475172
+ 199992 string characters out of 5764421
+ 636924 words of memory out of 5000000
+ 35279 multiletter control sequences out of 15000+600000
  569406 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,9n,79p,986b,612s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,885b,612s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></Users/carolinedevine/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on Lab5WriteUp.pdf (5 pages, 319282 bytes).
+Output written on Lab5WriteUp.pdf (5 pages, 316369 bytes).
 PDF statistics:
- 181 PDF objects out of 1000 (max. 8388607)
- 144 compressed objects within 2 object streams
- 30 named destinations out of 1000 (max. 500000)
+ 187 PDF objects out of 1000 (max. 8388607)
+ 150 compressed objects within 2 object streams
+ 31 named destinations out of 1000 (max. 500000)
  91 words of extra memory for PDF output out of 10000 (max. 10000000)
 
