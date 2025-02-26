@@ -58,6 +58,7 @@
 \usepackage{hyperref}%For Hyperlinks
 \usepackage{longtable} % for my big table
 \usepackage{float} % for using H
+\usepackage[skip=5pt]{caption} % spacing issues with caption
 \usepackage[shortlabels]{enumitem}% For enumerated lists with labels specified
                                   % We had to run tlmgr_install("enumitem") in R
 \hypersetup{colorlinks = true,citecolor=black} %set citations to have black (not green) color
@@ -92,11 +93,12 @@
 
 \begin{multicols}{2}
 \begin{abstract}
-This lab is an extension of Lab 2 which focused on how to automate data extraction for .WAV files through batch processing as well as extracting and analyzing musical features from \texttt{.JSON} data. The extension is outlined in Task 3 under the methods section which compiles data from multiple tracks using the Essentia model and LIWC text analysis. The goal is to use the methods below to create data frames that can be used to facilitate analysis of musical influence.
+This project produces data extraction by processing .WAV files to \texttt{.JSON} data and analyzing musical features via batch files and loops. We used Essentia\citep{Bogdanov} for sound analysis and LIWC\citep{Boyd2022} for lyrical examination, compiling data from 181 tracks were compiled into one dataset.
+We completed 5 tasks involving extracting, cleaning, merging, and visualizing key features to assess artist influence on the track ``Allentown.” Our results indicate that Manchester Orchestra predominantly influenced the sound, while The Front Bottoms influenced the lyrics.
+
 \end{abstract}
 
-\noindent \textbf{Keywords:} Data Collection, Lists, Batch Files, For Loops, JSON package
-
+\noindent \textbf{Keywords:} Data Collection \& Extraction, Batch Processing, Data Cleaning, Violin Plots
 \section{Introduction}
 The three bands: The Front Bottoms, Manchester Orchestra, and All Get Out collaborated on a song called ``Allentown"\citep{Ross} in 2018. This project aims at answering the research question of which band contributed most to this song. To analytically determine this, we will analyze 180 tracks and ``Allentown" through the lyrical and sound features. 
 
@@ -111,25 +113,21 @@ We extracted key musical features from the song ``Au Revoir (Adios)" using \text
 
 \subsection{Task 3: Load and Clean Data from Essentia Models}
 
-We used the Essentia Model Data which provides data about what the music sounds like in more human terms. Valence and arousal values were averaged across multiple sets. Key musical attributes were created using different extractors, including renaming features for clarity. Aslo, irrelevant columns were removed, resulting in a a clean data frame.
+We used the Essentia Model Data which provides data about what the music sounds like in more human terms. Valence and arousal values were averaged across multiple sets. Key musical attributes were created using different extractors, including renaming features for clarity. Also, irrelevant columns were removed, resulting in a a clean data frame.
 
 \subsection{Task 4: LIWC Text Analysis Tool}
-To analyze track lyrics, we used the LIWC text analysis tool, which extracts linguistic features related to thoughts, feelings, and personality traits. The processed data was then loaded for analysis. Data from Task 1, the Essentia models, and LIWC were merged into a single data frame, ensuring no duplication or omission. The final dataset contained 181 rows and 140 columns. To prevent coding conflicts in R, the column \texttt{function.} was renamed to \texttt{funct}. % DO I NEED 
+To analyze track lyrics, we used the LIWC text analysis tool, which extracts linguistic features related to thoughts, feelings, and personality traits\citep{Boyd2022}. The processed data was then loaded for analysis. Data from Task 1, the Essentia models, and LIWC were merged into a single data frame, ensuring no duplication or omission. The final dataset contained 181 rows and 140 columns. To prevent coding conflicts in R, the column \texttt{function.} was renamed to \texttt{funct}. % DO I NEED 
 
 %Lastly, we wrote two .csv files with one containing all tracks except ``Allentown" called \texttt{trainingdata.csv} and the other containing only ``Allentown" called \texttt{testingdata.csv}. This is useful to evaluate the information solely based on ``Allentown" as the initial research question calls for. 
 
 \subsection{Task 5: Summarizing the Data}
+We imported a provided extended dataset containing 67 features from Essentia’s music extractor, 14 features from Essentia models, 118 features from LIWC, and two additional variables from the bing sentiment lexicon\citep{HuLiu2004} into \texttt{R} . This task implements \texttt{tidyverse}\citep{tidyverse} syntax, a summary of data numerically and visually, and a potential answer to the research question: which artist had a bigger impact on the track ``Allentown"\citep{Ross}?
 
-Importing a provided extended dataset containing 67 features from Essentia’s music extractor, 14 features from Essentia models, 118 features from LIWC, and two additional variables from the bing sentiment lexicon\citep{HuLiu2004} into \texttt{R} . This task implements \texttt{tidyverse}\citep{tidyverse} syntax, a summary of data numerically and visually, and a potential answer to the research question: which artist had a bigger impact on the track ``Allentown"\citep{Ross}?
+For each numerical feature, summary statistics (minimum, first quartile, third quartile, interquartile range, and fences) were computed, grouped by artist.Each Allentown-specific value was then classified as "Out of Range", "Outlying", or "Within Range", allowing for a comparison of artist differences.
 
-Two datasets imported were read from .csv files, the main dataset and a subset specific to Allentown. We created a function, \texttt{range.allentown}, to compute summary statistics calculating the minimum, first quartile (Q1), third quartile (Q3), interquartile range (IQR), as well as lower (LF) and upper fences (UF) based on 1.5 times the IQR for a given feature grouped by artist. For each artist, the function calculates the Allentown-specific value for the feature which is then compared against these statistics to classify it as “Out of Range,” “Outlying,” or “Within Range.” The resulting summary table, which includes the artist name and statistics, is used to analyze differences between artists. 
-
-We then identified numeric feature from the main dataset using R’s \texttt{is.numeric} function with \texttt{sapply}, storing the names of the columns in a vector. At the same time, the function \texttt{range.allentown} was applied to each numeric feature using \texttt{lapply} to compute summary statistics and range classifications for the Allentown subset. All the outputs were combined into one summary table using \texttt{bind\_rows} for further analysis.
-
-To determine which features were most influential, we initially examined 20 candidate features across three bands, noting that only one band out of the three consistently exhibited values classified as “Within Range.” Based on this observation, we selected eight features: dissonance, average loudness, chords strength, spectral rolloff, perception, positive words, OtherP, and conjunctions. We created two tables: one (\texttt{isolated.feature.sum}) displaying detailed statistics (minimum, lower fence, upper fence, and, maximum) for each feature per artist (see Appendix), and another providing a concise view of the artist, feature, and description. Both tables were formatted into LaTeX using the \texttt{xtable} package\citep{Xtable}.
-
+To identify the most influential features, we initially evaluated 20 features, noting only one band consistently exhibited "Within Range" values, and selected eight (dissonance, average loudness, chords strength, spectral rolloff, perception, positive words, OtherP, and conjunctions). Detailed statistics for these features were formatted into Table 3 (see Appendix) and Table 1 (see below) provided a concise view of the artist, feature, and description using the \texttt{xtable} package \citep{Xtable}.
 % latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Tue Feb 25 11:07:13 2025
+% Tue Feb 25 19:31:19 2025
 \begin{table}[ht]
 \centering
 \begin{tabular}{lrrrr}
@@ -166,7 +164,7 @@ All Get Out & 935.91 & 701.91 & 2767.30 & 2520.04 \\
 
 
 % latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Tue Feb 25 11:07:13 2025
+% Tue Feb 25 19:31:19 2025
 \begin{table}[H]
 \centering
 \begingroup\small
@@ -192,10 +190,10 @@ All Get Out & spectral\_rolloff & Out of Range \\
 \caption{Sound Features} 
 \end{table}
 
-Lastly, the eight features selected, four are from Essentia which represents sound information and four are from LIWC which is representative of lyrical information. We created Violin and box plots were created with \texttt{ggplot2}\citep{Ggplot2}. For sound, plots were generated for dissonance, average loudness, chords strength, and spectral rolloff; for lyrics, similar plots were made for perception, positive words, OtherP, and conjunctions, with each plot including a horizontal line indicating the corresponding ``Allentown" value. We combined the two plots using the \texttt{patchwork} package\citep{Patchwork} to produce visualizations for sound and lyrical features.
+We selected eight features were selected—four from Essentia (sound) and four from LIWC (lyrics). Violin and box plots for sound (dissonance, average loudness, chords strength, spectral rolloff) and lyrics (perception, positive words, OtherP, conjunctions) were created using \texttt{ggplot2} \citep{Ggplot2}, with each plot including a horizontal line for the corresponding ``Allentown” value. We combined the plots using the \texttt{patchwork} package \citep{Patchwork} to visualize both sound and lyrical features.
 
 \section{Results}
-For Task 1, we successfully analyzed .WAV files, storing the results in .JSON files. For Task 2 and 3, we extracted key musical features from 181 tracks,cleaned and organized the data from Essentia model's .JSON outputs, combined those data points with LIWC text analysis, and created training and testing data sets\citep{Bogdanov}. 
+For Task 1, we successfully analyzed .WAV files, storing the results in .JSON files. For Task 2 and 3, we extracted key musical features from 181 tracks,cleaned and organized the data from Essentia model's .JSON outputs, combined those data points with LIWC text analysis, and created training and testing data sets\citep{Bogdanov}\citep{Boyd2022}. 
 Task 4 showed that Manchester Orchestra predominantly influenced sound features, while The Foot Bottoms had the greatest impact on lyrical features. 
 
 \begin{figure}[H]
@@ -205,15 +203,13 @@ Task 4 showed that Manchester Orchestra predominantly influenced sound features,
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
 \end{knitrout}
 \caption{Sound Features}
-\label{lyrical} 
+\label{sound} 
 \end{center}
 \end{figure}
-Figure 1 shows the four sound features with the black dotted line intersecting with the Manchester Orchestra in all four. This is replicated for the lyrical features in Figure 2 in the appendix. 
+The violin plots shows that, for each of the four features, ``Allentown’s" value (indicated by the dashed line) aligns most closely with the distribution of Manchester Orchestra, suggesting that the track’s sounds are most similar to this band out of the three artists. A similar plot is replicated for the lyrical features in Figure 2 in the appendix. The lyrical feature plot indicates that The Front Bottoms has the greatest influence on the lyrical aspects of ``Allentown", particularly in conjunctions, positive words, and other parts of speech, despite the dashed line not aligning perfectly with the center of the distribution. Perception, however, is an outlier, where Manchester Orchestra’s influence is most prominent.
 
-\columnbreak
 \section{Discussion}
- This process is now automated and can be replicated with other files as well. This creates an efficient way to compare larger data sets of multiple artists or albums. The integrated, structured data frame allows for specific analysis to address research question in future work. 
-
+With the eight identified features, we successfully identified the influence of a particular band on the track ``Allentown", with Manchester Orchestra influencing the sound and The Front Bottoms influencing the lyrics. This can be replicated to see how all 20 of the original selected features compare to these results. Manually, we identified that Manchester Orchestra influenced all the 12 other features selected. We did not select the features which two bands exhibited "Within Range" values (21 total) which could also potentially shed light on more accurate results. We chose to look at the "Within Range" values, but potential other avenues to dissect which artist had the most influence could be focused on different summary variables such as mean, average, standard deviation. This project can be replicated by others with only slight manipulations to the code in \texttt{R} for other musical analysis with different artists and tracks. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -232,7 +228,7 @@ Figure 1 shows the four sound features with the black dotted line intersecting w
 \section{Appendix}
 
 % latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Tue Feb 25 11:07:14 2025
+% Tue Feb 25 19:31:20 2025
 \begin{table}[H]
 \centering
 \begingroup\small
